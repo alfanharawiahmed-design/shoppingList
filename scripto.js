@@ -1,6 +1,8 @@
 const inputText = document.querySelector('#item-input');
 const inputButton = document.querySelector('.btn');
 const ul = document.querySelector('#item-list');
+const xmarkList = document.querySelectorAll('li button i');
+
 
 function addItem(e)
 {
@@ -13,15 +15,22 @@ function addItem(e)
         button.className = 'remove-item btn-link text-red';
         const i = document.createElement('i');
         i.className = 'fa-solid fa-xmark';
+        i.addEventListener('click',removeItem)
     
         button.appendChild(i);
         li.appendChild(button);
         ul.appendChild(li);
         inputText.value = '';
+        console.log(xmarkList);
     }
     
 }
 
+function removeItem(e)
+{
+    e.target.parentElement.parentElement.remove()
+};
+
+xmarkList.forEach(item => { item.addEventListener('click', removeItem) });
+
 inputButton.addEventListener('click', addItem);
-
-
