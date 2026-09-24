@@ -8,7 +8,7 @@ const clearBtn = document.getElementById('clear');
 function addItem(e)
 {
     e.preventDefault();
-    if (inputText.value === '' || inputText.value=== ' ') { alert('The Field Is Empty!'); }
+    if (inputText.value === '' || inputText.value=== ' ') { alert('الحقل فارغ أضف شيئا له!'); }
     else {
         const li = document.createElement('li');
         li.textContent = inputText.value
@@ -33,7 +33,7 @@ function removeItem(e)
 
 function clearItems(e)
 {
-    ul.innerHTML = ''; 
+    if (ul.innerHTML == '') { alert('السلة فارغة لاتحتوي حاجات') } else { ul.innerHTML = '';}
 }
 xmarkList.forEach(item => { item.addEventListener('click', removeItem) });
 
