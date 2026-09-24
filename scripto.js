@@ -2,6 +2,7 @@ const inputText = document.querySelector('#item-input');
 const inputButton = document.querySelector('.btn');
 const ul = document.querySelector('#item-list');
 const xmarkList = document.querySelectorAll('li button i');
+const clearBtn = document.getElementById('clear');
 
 
 function addItem(e)
@@ -21,7 +22,6 @@ function addItem(e)
         li.appendChild(button);
         ul.appendChild(li);
         inputText.value = '';
-        console.log(xmarkList);
     }
     
 }
@@ -31,6 +31,11 @@ function removeItem(e)
     e.target.parentElement.parentElement.remove()
 };
 
+function clearItems(e)
+{
+    ul.innerHTML = ''; 
+}
 xmarkList.forEach(item => { item.addEventListener('click', removeItem) });
 
 inputButton.addEventListener('click', addItem);
+clearBtn.addEventListener('click',clearItems)
