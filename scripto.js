@@ -1,7 +1,7 @@
 const inputText = document.querySelector('#item-input');
 const inputButton = document.querySelector('.btn');
 const ul = document.querySelector('#item-list');
-const xmarkList = document.querySelectorAll('li button i');
+const xmarkList = document.querySelectorAll('li button');
 const clearBtn = document.getElementById('clear');
 
 
