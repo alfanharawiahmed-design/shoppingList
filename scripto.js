@@ -14,9 +14,9 @@ function addItem(e)
         li.textContent = inputText.value
         const button = document.createElement('button');
         button.className = 'remove-item btn-link text-red';
+        button.addEventListener('click', removeItem);
         const i = document.createElement('i');
         i.className = 'fa-solid fa-xmark';
-        i.addEventListener('click',removeItem)
     
         button.appendChild(i);
         li.appendChild(button);
