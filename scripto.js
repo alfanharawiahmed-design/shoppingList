@@ -18,7 +18,6 @@ function addItem(e)
         button.className = 'remove-item btn-link text-red';
         const i = document.createElement('i');
         i.className = 'fa-solid fa-xmark';
-        i.addEventListener('click',removeItem)
     
         button.appendChild(i);
         li.appendChild(button);
@@ -33,12 +32,12 @@ function addItem(e)
 
 function removeItem(e)
 {
-    if (e.target.parentElement.parentElement.tagName === 'LI') { e.target.parentElement.parentElement.remove(); hide(); }
+    if (e.target.parentElement.parentElement.tagName === 'LI') { if (confirm('هـــل انت متأكد من الحذف؟')) { e.target.parentElement.parentElement.remove(); }; hide(); }
 };
 
 function clearItems()
 {
-    if (ul.children.length === 0) { alert('السلة فارغة لاتحتوي عناصــر'); } else { ul.innerHTML = ''; };
+    if (ul.children.length === 0) { alert('السلة فارغة لاتحتوي عناصــر'); } else { confirm('هـــل انت متأكد من الحذف؟'); ul.innerHTML = ''; };
     hide();
 }
 
