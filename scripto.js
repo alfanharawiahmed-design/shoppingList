@@ -46,6 +46,24 @@ function hide()
     if (ul.children.length === 0) { filter.style.display = 'none'; clearBtn.style.display='none'}
 };
 
+function appear(e)
+{
+    if (filter.value !== '')
+    {
+        const elements = ul.querySelectorAll('li');
+        elements.forEach(item => { if (item.textContent !== filter.value) { item.style.display = 'none' } else { item.style.display = '' }; })
+    }
+    else
+    {
+        const elements = ul.querySelectorAll('li');
+        elements.forEach(item => { item.style.display = ''; })
+    }
+    
+
+}
+
+
+filter.addEventListener('input', appear);
 hide();
 ul.addEventListener('click', removeItem);
 inputButton.addEventListener('click', addItem);
