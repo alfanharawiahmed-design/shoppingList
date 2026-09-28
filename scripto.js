@@ -48,20 +48,9 @@ function hide()
 
 function appear(e)
 {
-    if (filter.value !== '')
-    {
         const elements = ul.querySelectorAll('li');
-        elements.forEach(item => { if (item.textContent !== filter.value) { item.style.display = 'none' } else { item.style.display = '' }; })
-    }
-    else
-    {
-        const elements = ul.querySelectorAll('li');
-        elements.forEach(item => { item.style.display = ''; })
-    }
-    
-
+    elements.forEach(item => { if (item.textContent.includes(filter.value)) { item.style.display = '' } else { item.style.display = 'none' }; });
 }
-
 
 filter.addEventListener('input', appear);
 hide();
