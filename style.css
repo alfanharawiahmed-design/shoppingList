@@ -65,6 +65,12 @@ header h1 {
   border-radius: 5px;
   padding: 10px 20px;
   cursor: pointer;
+display: inline-block;
+}
+
+.second
+{
+margin-left:55px ;
 }
 
 .btn:hover {

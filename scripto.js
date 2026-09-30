@@ -64,8 +64,23 @@ function filterItems(e)
         if (itemText.indexOf(filterText) !== -1) { item.style.display = 'flex' } else {item.style.display='none' }
     })
 }
+
+// localStorage.setItem('name', 'Ahmed');
+// console.log(localStorage.getItem('name'));
+// localStorage.removeItem('name');
+// localStorage.setItem('age', '30 years old');
+// localStorage.clear();
+//
+
+function addItemToLocalStorage()
+{
+    localStorage.setItem(inputText.value, inputText.value);
+}
+
+inputButton.addEventListener('click', addItemToLocalStorage);
+localStorage.setItem('name', 'Ahmed');
 filter.addEventListener('input', filterItems);
 hide();
 ul.addEventListener('click', removeItem);
 inputButton.addEventListener('click', addItem);
-clearBtn.addEventListener('click',clearItems)
+clearBtn.addEventListener('click', clearItems);
