@@ -62,16 +62,18 @@ header h1 {
   background-color: #333;
   color: #fff;
   border: none;
-  border-radius: 5px;
+  border-radius: 20px;
   padding: 10px 20px;
   cursor: pointer;
-display: inline-block;
+display: flex;
+flex-basis: 50%;
+margin: 5px 10px;
 }
 
-/* .second */
-/* { */
-/* margin-left:30px ; */
-/* } */
+.submit
+{
+display: flex;
+}
 
 .btn:hover {
   background-color: #444;
