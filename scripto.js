@@ -4,6 +4,7 @@ const ul = document.querySelector('#item-list');
 const xmarkList = document.querySelectorAll('li button');
 const clearBtn = document.getElementById('clear');
 const filter = document.getElementById('filter');
+const second = document.querySelector('.second');
 
 
 
@@ -76,6 +77,8 @@ function addItemToLocalStorage()
 {
     localStorage.setItem(inputText.value, inputText.value);
 }
+
+second.addEventListener('click', (e) => {e.preventDefault() })
 
 inputButton.addEventListener('click', addItemToLocalStorage);
 localStorage.setItem('name', 'Ahmed');
