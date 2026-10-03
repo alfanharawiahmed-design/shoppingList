@@ -6,6 +6,7 @@ const clearBtn = document.getElementById('clear');
 const filter = document.getElementById('filter');
 const second = document.querySelector('.second');
 const appearItems = document.querySelector('.second');
+const deleteItems = document.querySelector('.third');
 
 function addItem(e)
 {
@@ -114,5 +115,6 @@ ul.addEventListener('click', removeItem);
 inputButton.addEventListener('click', addItem);
 clearBtn.addEventListener('click', clearItems);
 appearItems.addEventListener('click', displayItems);
+deleteItems.addEventListener('click', (e) => { e.preventDefault(); if (confirm('هـــل تريد حذف العناصر السابقة؟!')) { localStorage.clear()}  })
 hide();
 
