@@ -106,10 +106,6 @@ function displayItems()
 
 
 second.addEventListener('click', (e) => { e.preventDefault() });
-localStorage.setItem('name', 'Ahmed');
-localStorage.setItem('age', 30);
-localStorage.setItem('email', 'ahmadgold118@gmail.com');
-localStorage.setItem('adress', 'Baghdad');
 filter.addEventListener('input', filterItems);
 ul.addEventListener('click', removeItem);
 inputButton.addEventListener('click', addItem);
