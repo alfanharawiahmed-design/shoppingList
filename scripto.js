@@ -5,31 +5,21 @@ const xmarkList = document.querySelectorAll('li button');
 const clearBtn = document.getElementById('clear');
 const filter = document.getElementById('filter');
 const second = document.querySelector('.second');
-
-
+const appearItems = document.querySelector('.second');
 
 function addItem(e)
 {
     e.preventDefault();
-    if (inputText.value === '' || inputText.value=== ' ') { alert('الحقل فارغ أضف شيئا له!'); }
-    else {
-        const li = document.createElement('li');
-        li.textContent = inputText.value
-        const button = document.createElement('button');
-        button.className = 'remove-item btn-link text-red';
-        const i = document.createElement('i');
-        i.className = 'fa-solid fa-xmark';
-    
-        button.appendChild(i);
-        li.appendChild(button);
-        ul.appendChild(li);
-        inputText.value = '';
-        clearBtn.style.display = '';
-        filter.style.display = '';
-        
+    if (inputText.value === '' || inputText.value === ' ')
+    {
+        alert('الحقل فارغ أضف شيئا له!');
+        return
     }
-    
-}
+    const newItem=inputText.value
+    addItemToStorage();
+    addToDOM(newItem);
+};
+
 
 function removeItem(e)
 {
@@ -38,9 +28,9 @@ function removeItem(e)
 
 function clearItems()
 {
-    if (ul.children.length === 0) { alert('السلة فارغة لاتحتوي عناصــر'); } else { confirm('هـــل انت متأكد من الحذف؟'); ul.innerHTML = ''; };
-    hide();
-}
+    if (confirm('هـــل انت متأكد من الحذف؟')) { ul.innerHTML = ''; hide();}
+};
+    
 
 function hide()
 {
@@ -52,7 +42,6 @@ function hide()
         // const elements = ul.querySelectorAll('li');
     // // // elements.forEach(item => { if (item.textContent.includes(filter.value)) { item.style.display = '' } else { item.style.display = 'none' }; });
 // }
-//
 
 function filterItems(e)
 {
@@ -64,26 +53,66 @@ function filterItems(e)
         const itemText = item.firstChild.textContent.toLowerCase();
         if (itemText.indexOf(filterText) !== -1) { item.style.display = 'flex' } else {item.style.display='none' }
     })
-}
+};
 
-// localStorage.setItem('name', 'Ahmed');
-// console.log(localStorage.getItem('name'));
-// localStorage.removeItem('name');
-// localStorage.setItem('age', '30 years old');
-// localStorage.clear();
-//
-
-function addItemToLocalStorage()
+function addToDOM(item)
 {
-    localStorage.setItem(inputText.value, inputText.value);
+    const li = document.createElement('li');
+    li.textContent = item;
+    const button = document.createElement('button');
+    button.className = 'remove-item btn-link text-red';
+    const i = document.createElement('i');
+    i.className = 'fa-solid fa-xmark';
+    button.appendChild(i);
+    li.appendChild(button);
+    ul.appendChild(li);
+    inputText.value = '';
+    clearBtn.style.display = '';
+    filter.style.display = '';
 }
 
-second.addEventListener('click', (e) => {e.preventDefault() })
+function getItemsFromStorage()
+{
+ if (localStorage.getItem('items') === null)
+ {
+     itemFromStorage = [];
+ }
+ else
+ {
+ itemFromStorage= JSON.parse(localStorage.getItem('items'))
+    };
+    return itemFromStorage
+}
 
-inputButton.addEventListener('click', addItemToLocalStorage);
+function addItemToStorage()
+{
+    const itemFromStorage = getItemsFromStorage();
+    itemFromStorage.push(inputText.value);
+    localStorage.setItem('items', JSON.stringify(itemFromStorage));    
+};
+
+function displayItems()
+{
+    const itemFromStorage = getItemsFromStorage();
+    if (itemFromStorage.length === 0) { alert('لا تـــوجد عناصر !!') } else 
+    {
+        itemFromStorage.forEach(item => { addToDOM(item) })
+        
+    };
+    
+}
+
+
+
+second.addEventListener('click', (e) => { e.preventDefault() });
 localStorage.setItem('name', 'Ahmed');
+localStorage.setItem('age', 30);
+localStorage.setItem('email', 'ahmadgold118@gmail.com');
+localStorage.setItem('adress', 'Baghdad');
 filter.addEventListener('input', filterItems);
-hide();
 ul.addEventListener('click', removeItem);
 inputButton.addEventListener('click', addItem);
 clearBtn.addEventListener('click', clearItems);
+appearItems.addEventListener('click', displayItems);
+hide();
+
