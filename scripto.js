@@ -7,24 +7,48 @@ const filter = document.getElementById('filter');
 const second = document.querySelector('.second');
 const appearItems = document.querySelector('.second');
 const deleteItems = document.querySelector('.third');
+const ico = document.querySelector('.fit');
+let isEditedMode = false;
 
 function addItem(e)
 {
     e.preventDefault();
+    const newItem = inputText.value
     if (inputText.value === '' || inputText.value === ' ')
     {
         alert('الحقل فارغ أضف شيئا له!');
         return
-    }
-    const newItem=inputText.value
+    } 
+    
     addItemToStorage();
     addToDOM(newItem);
 };
 
-
-function removeItem(e)
+function onClickItem(e)
 {
-    if (e.target.parentElement.parentElement.tagName === 'LI') { if (confirm('هـــل انت متأكد من الحذف؟')) { e.target.parentElement.parentElement.remove(); }; hide(); }
+    if (e.target.parentElement.parentElement.tagName === 'LI')
+    {
+        removeItem(e.target.parentElement.parentElement)
+    };
+    
+};
+
+function removeItem(item)
+{
+    if (confirm('هـــل انت متأكد من الحذف؟'))
+    {
+        item.remove();
+        removeItemFromStorage(item.textContent)
+    };
+            ; hide()
+};
+
+function removeItemFromStorage(item)
+{
+    let itemsFromStorage = getItemsFromStorage();
+    itemsFromStorage = itemsFromStorage.filter(e => { return e!==item; })
+    
+    localStorage.setItem('items', JSON.stringify(itemsFromStorage));
 };
 
 function clearItems()
@@ -70,10 +94,12 @@ function addToDOM(item)
     inputText.value = '';
     clearBtn.style.display = '';
     filter.style.display = '';
-}
+};
 
 function getItemsFromStorage()
 {
+    let itemFromStorage;
+    
  if (localStorage.getItem('items') === null)
  {
      itemFromStorage = [];
@@ -83,7 +109,7 @@ function getItemsFromStorage()
  itemFromStorage= JSON.parse(localStorage.getItem('items'))
     };
     return itemFromStorage
-}
+};
 
 function addItemToStorage()
 {
@@ -97,17 +123,32 @@ function displayItems()
     const itemFromStorage = getItemsFromStorage();
     if (itemFromStorage.length === 0) { alert('لا تـــوجد عناصر !!') } else 
     {
-        itemFromStorage.forEach(item => { addToDOM(item) })
+    itemFromStorage.forEach(item => { addToDOM(item) })
         
     };
     
-}
+};
 
+function editItem(e)
+{
+    if (e.target.tagName === 'LI')
+    {
+        // isEditedMode = true;
+        inputButton.style.backgroundColor = 'green';
+        inputButton.innerHTML = '<i class="fa-solid fa-pen fit"></i> تعديــل العنــصر';
+        inputText.value = e.target.textContent;
+        ul.querySelectorAll('li').forEach(i => { i.style.color = '#000';});
+        e.target.style.color = '#ccc';
+    };
+};
 
+function editItemText() { addToDOM(inputText.value) };
 
+inputButton.addEventListener('click', editItem);
 second.addEventListener('click', (e) => { e.preventDefault() });
 filter.addEventListener('input', filterItems);
-ul.addEventListener('click', removeItem);
+ul.addEventListener('click', onClickItem);
+ul.addEventListener('click', editItem);
 inputButton.addEventListener('click', addItem);
 clearBtn.addEventListener('click', clearItems);
 appearItems.addEventListener('click', displayItems);
