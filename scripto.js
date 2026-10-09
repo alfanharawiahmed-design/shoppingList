@@ -46,7 +46,7 @@ function removeItem(item)
 function removeItemFromStorage(item)
 {
     let itemsFromStorage = getItemsFromStorage();
-    itemsFromStorage = itemsFromStorage.filter(e => { return e!==item; })
+    itemsFromStorage = itemsFromStorage.filter(e => e !== item);
     
     localStorage.setItem('items', JSON.stringify(itemsFromStorage));
 };
@@ -152,6 +152,7 @@ ul.addEventListener('click', editItem);
 inputButton.addEventListener('click', addItem);
 clearBtn.addEventListener('click', clearItems);
 appearItems.addEventListener('click', displayItems);
-deleteItems.addEventListener('click', (e) => { e.preventDefault(); if (confirm('هـــل تريد حذف العناصر السابقة؟!')) { localStorage.clear()}  })
+deleteItems.addEventListener('click', (e) => { e.preventDefault(); if (confirm('هـــل تريد حذف العناصر السابقة؟!')) { localStorage.clear() } })
+ul.addEventListener('mouseover', () => { ul.querySelectorAll('li').forEach(li=>li.style.cursor='pointer') })
 hide();
 
