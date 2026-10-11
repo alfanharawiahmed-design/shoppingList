@@ -126,6 +126,10 @@ display: flex;
   margin: 0 5px 20px;
   font-weight: 700;
 }
+ul
+{
+cursor:pointer;
+}
 
 .fit 
 {

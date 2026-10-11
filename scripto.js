@@ -1,5 +1,5 @@
 const inputText = document.querySelector('#item-input');
-const inputButton = document.querySelector('.btn');
+const inputButton = document.querySelector('.first');
 const ul = document.querySelector('#item-list');
 const xmarkList = document.querySelectorAll('li button');
 const clearBtn = document.getElementById('clear');
@@ -59,8 +59,11 @@ function clearItems()
 
 function hide()
 {
-    if (ul.children.length === 0) { filter.style.display = 'none'; clearBtn.style.display='none'}
-};
+    if (ul.children.length === 0)
+    {
+        filter.style.display = 'none'; clearBtn.style.display = 'none';
+    };
+}
 
 // function appear()
 // {
@@ -123,36 +126,52 @@ function displayItems()
     const itemFromStorage = getItemsFromStorage();
     if (itemFromStorage.length === 0) { alert('لا تـــوجد عناصر !!') } else 
     {
-    itemFromStorage.forEach(item => { addToDOM(item) })
-        
+    itemFromStorage.forEach(item => { addToDOM(item) })  
     };
-    
 };
 
 function editItem(e)
 {
     if (e.target.tagName === 'LI')
     {
-        // isEditedMode = true;
+        isEditedMode = true;
         inputButton.style.backgroundColor = 'green';
         inputButton.innerHTML = '<i class="fa-solid fa-pen fit"></i> تعديــل العنــصر';
         inputText.value = e.target.textContent;
-        ul.querySelectorAll('li').forEach(i => { i.style.color = '#000';});
+        ul.querySelectorAll('li').forEach(i => { i.style.color = '#000'; i.classList.remove('active')});
         e.target.style.color = '#ccc';
+        e.target.classList.add('active');
+        editMode(e.target);
     };
 };
 
+function editMode(item)
+{
+    if (isEditedMode)
+    {
+        inputButton.removeEventListener('click',addItem);
+        appearItems.removeEventListener('click', displayItems);
+        inputButton.addEventListener('click', () => { if (inputText.value === '') { alert('لا يمــكن التعديل الحقل فارغ !!') } else if (item.style.color === 'rgb(204, 204, 204)') { item.textContent = inputText.value;inputText.value = ''; item.style.color = '#000';  } else {alert('لا يــوجد عنصر محدد !!') } } );
+
+    }
+    console.log(inputText.value);
+    isEditedMode = false;
+};
+
+console.log(localStorage);
+
+
 function editItemText() { addToDOM(inputText.value) };
 
-inputButton.addEventListener('click', editItem);
 second.addEventListener('click', (e) => { e.preventDefault() });
 filter.addEventListener('input', filterItems);
 ul.addEventListener('click', onClickItem);
+// inputButton.addEventListener('clickup', editItem);
+inputButton.addEventListener('click', (e) => e.preventDefault());
 ul.addEventListener('click', editItem);
 inputButton.addEventListener('click', addItem);
 clearBtn.addEventListener('click', clearItems);
 appearItems.addEventListener('click', displayItems);
 deleteItems.addEventListener('click', (e) => { e.preventDefault(); if (confirm('هـــل تريد حذف العناصر السابقة؟!')) { localStorage.clear() } })
-ul.addEventListener('mouseover', () => { ul.querySelectorAll('li').forEach(li=>li.style.cursor='pointer') })
 hide();
 
