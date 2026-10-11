@@ -16,7 +16,7 @@ function addItem(e)
     const newItem = inputText.value
     if (inputText.value === '' || inputText.value === ' ')
     {
-        alert('الحقل فارغ أضف شيئا له!');
+        alert('لايمــكن الاضافة الحقل فارغ !!');
         return
     } 
     
@@ -132,9 +132,9 @@ function displayItems()
 
 function editItem(e)
 {
+    isEditedMode = true;
     if (e.target.tagName === 'LI')
     {
-        isEditedMode = true;
         inputButton.style.backgroundColor = 'green';
         inputButton.innerHTML = '<i class="fa-solid fa-pen fit"></i> تعديــل العنــصر';
         inputText.value = e.target.textContent;
@@ -146,32 +146,37 @@ function editItem(e)
 
 function editMode(item)
 {
-    function edit()
-    {
-        if (item.style.color === 'rgb(204, 204, 204)')
-        {
-            item.firstChild.textContent = inputText.value;
-            item.style.color = '#000';
-            inputText.value = '';
-        }
-    };
-    
     if (isEditedMode)
     {
-        inputButton.removeEventListener('click', addItem);
-        appearItems.removeEventListener('click', displayItems);
         inputButton.addEventListener('click', edit);
+        inputButton.removeEventListener('click', addItem);
+        // appearItems.removeEventListener('click', displayItems);
     }
-    return isEditedMode = false;
+    
+    function edit()
+    {
+        
+        if (item.style.color === 'rgb(204, 204, 204)')
+        {
+        item.firstChild.textContent = inputText.value;
+        item.style.color = '#000';
+        inputText.value = '';
+        }
+    };
+
+    isEditedMode = false;
 };
 
 function reset()
-{
+{   
     if (!isEditedMode)
     {
         inputButton.innerHTML = '<i class="fa-solid fa-plus fit"></i>أضــافة العنـــصر الــى الســلة';     
         inputButton.style.backgroundColor = '#333';
-    };
+        // inputButton.addEventListener('click', addItem);
+        // appearItems.addEventListener('click', displayItems);
+        
+    };                                                            
 };
 
 
