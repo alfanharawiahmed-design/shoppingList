@@ -142,7 +142,14 @@ function editItem(e)
         e.target.style.color = '#ccc';
         e.target.classList.add('active');
         editMode(e.target);
+        console.log(e.target.style.color);
     };
+};
+
+function edit()
+{
+    
+    
 };
 
 function editMode(item)
@@ -151,11 +158,14 @@ function editMode(item)
     {
         inputButton.removeEventListener('click',addItem);
         appearItems.removeEventListener('click', displayItems);
-        inputButton.addEventListener('click', () => { if (inputText.value === '') { alert('لا يمــكن التعديل الحقل فارغ !!') } else if (item.style.color === 'rgb(204, 204, 204)') { item.textContent = inputText.value;inputText.value = ''; item.style.color = '#000';  } else {alert('لا يــوجد عنصر محدد !!') } } );
-
+        inputButton.addEventListener('click', () =>
+        {
+            if (inputText.value === '') { alert('لا يمــكن التعديل الحقل فارغ !!') }
+            else if (item.style.color === 'rgb(204, 204, 204)') { item.firstChild.textContent = inputText.value; item.style.color = '#000'; inputText.value = ''; } else { alert('لا يــوجد عنصر محدد !!') }
+        });
     }
-    console.log(inputText.value);
-    isEditedMode = false;
+    console.log(inputText.value.firstChild);
+    return isEditedMode = false;
 };
 
 console.log(localStorage);
