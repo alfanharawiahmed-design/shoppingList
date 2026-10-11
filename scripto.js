@@ -126,7 +126,7 @@ function displayItems()
     const itemFromStorage = getItemsFromStorage();
     if (itemFromStorage.length === 0) { alert('لا تـــوجد عناصر !!') } else 
     {
-    itemFromStorage.forEach(item => { addToDOM(item) })  
+    itemFromStorage.forEach(item => { addToDOM (item)})
     };
 };
 
@@ -138,50 +138,52 @@ function editItem(e)
         inputButton.style.backgroundColor = 'green';
         inputButton.innerHTML = '<i class="fa-solid fa-pen fit"></i> تعديــل العنــصر';
         inputText.value = e.target.textContent;
-        ul.querySelectorAll('li').forEach(i => { i.style.color = '#000'; i.classList.remove('active')});
+        ul.querySelectorAll('li').forEach(i => { i.style.color = '#000';});
         e.target.style.color = '#ccc';
-        e.target.classList.add('active');
         editMode(e.target);
-        console.log(e.target.style.color);
     };
-};
-
-function edit()
-{
-    
-    
 };
 
 function editMode(item)
 {
+    function edit()
+    {
+        if (item.style.color === 'rgb(204, 204, 204)')
+        {
+            item.firstChild.textContent = inputText.value;
+            item.style.color = '#000';
+            inputText.value = '';
+        }
+    };
+    
     if (isEditedMode)
     {
-        inputButton.removeEventListener('click',addItem);
+        inputButton.removeEventListener('click', addItem);
         appearItems.removeEventListener('click', displayItems);
-        inputButton.addEventListener('click', () =>
-        {
-            if (inputText.value === '') { alert('لا يمــكن التعديل الحقل فارغ !!') }
-            else if (item.style.color === 'rgb(204, 204, 204)') { item.firstChild.textContent = inputText.value; item.style.color = '#000'; inputText.value = ''; } else { alert('لا يــوجد عنصر محدد !!') }
-        });
+        inputButton.addEventListener('click', edit);
     }
-    console.log(inputText.value.firstChild);
     return isEditedMode = false;
 };
 
-console.log(localStorage);
+function reset()
+{
+    if (!isEditedMode)
+    {
+        inputButton.innerHTML = '<i class="fa-solid fa-plus fit"></i>أضــافة العنـــصر الــى الســلة';     
+        inputButton.style.backgroundColor = '#333';
+    };
+};
 
 
-function editItemText() { addToDOM(inputText.value) };
-
-second.addEventListener('click', (e) => { e.preventDefault() });
+inputButton.addEventListener('mouseup', reset);
+second.addEventListener('click', (e) => { e.preventDefault()});
 filter.addEventListener('input', filterItems);
 ul.addEventListener('click', onClickItem);
-// inputButton.addEventListener('clickup', editItem);
 inputButton.addEventListener('click', (e) => e.preventDefault());
 ul.addEventListener('click', editItem);
 inputButton.addEventListener('click', addItem);
 clearBtn.addEventListener('click', clearItems);
 appearItems.addEventListener('click', displayItems);
-deleteItems.addEventListener('click', (e) => { e.preventDefault(); if (confirm('هـــل تريد حذف العناصر السابقة؟!')) { localStorage.clear() } })
+deleteItems.addEventListener('click', (e) => { e.preventDefault(); if (confirm('هـــل تريد حذف العناصر السابقة؟!')) { localStorage.clear() } });
 hide();
 
