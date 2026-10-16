@@ -24,15 +24,15 @@ function addItem(e)
     {
         const itemToEdit = ul.querySelector('.edit-mode');
         removeItemFromStorage(itemToEdit.textContent);
-        // console.log(itemToEdit);
-        itemToEdit.classList.remove('edit-mode');
         itemToEdit.remove();
         isEditedMode = false;
         hide();
         
-    }
+    };
+    
     addItemToStorage();
     addToDOM(newItem);
+
 };
 
 function onClickItem(e)
@@ -155,7 +155,6 @@ function setItemToEdit(e)
     inputButton.innerHTML = '<i class="fa-solid fa-pen fit"></i> تــعديل العنــصر ';
     inputButton.style.backgroundColor = 'green';
     inputText.value = e.innerText;
-    console.log(e);
 };
 
 // ـــــــــــــــــــــــــــــــــــــــــــــــ
