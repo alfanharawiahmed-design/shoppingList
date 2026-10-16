@@ -20,6 +20,17 @@ function addItem(e)
         return
     } 
     
+    if (isEditedMode)
+    {
+        const itemToEdit = ul.querySelector('.edit-mode');
+        removeItemFromStorage(itemToEdit.textContent);
+        // console.log(itemToEdit);
+        itemToEdit.classList.remove('edit-mode');
+        itemToEdit.remove();
+        isEditedMode = false;
+        hide();
+        
+    }
     addItemToStorage();
     addToDOM(newItem);
 };
@@ -29,8 +40,8 @@ function onClickItem(e)
     if (e.target.parentElement.parentElement.tagName === 'LI')
     {
         removeItem(e.target.parentElement.parentElement)
-    };
-    
+    }
+    else {setItemToEdit(e.target) }
 };
 
 function removeItem(item)
@@ -56,14 +67,18 @@ function clearItems()
     if (confirm('هـــل انت متأكد من الحذف؟')) { ul.innerHTML = ''; hide();}
 };
     
-
 function hide()
 {
+    // inputText.value = '';
     if (ul.children.length === 0)
     {
-        filter.style.display = 'none'; clearBtn.style.display = 'none';
+        filter.style.display = 'none';
+        clearBtn.style.display = 'none';
     };
-}
+    inputButton.innerHTML = '<i class="fa-solid fa-plus fit"></i> أضــافة العنـــصر الــى الســلة ';
+    inputButton.style.backgroundColor = "#333";
+    isEditedMode = false;
+};
 
 // function appear()
 // {
@@ -129,66 +144,28 @@ function displayItems()
     itemFromStorage.forEach(item => { addToDOM (item)})
     };
 };
+// ــــــــــــــــــــــــــــــــــــــــــــــــــــ
 
-function editItem(e)
-{
+
+function setItemToEdit(e)
+{ 
     isEditedMode = true;
-    if (e.target.tagName === 'LI')
-    {
-        inputButton.style.backgroundColor = 'green';
-        inputButton.innerHTML = '<i class="fa-solid fa-pen fit"></i> تعديــل العنــصر';
-        inputText.value = e.target.textContent;
-        ul.querySelectorAll('li').forEach(i => { i.style.color = '#000';});
-        e.target.style.color = '#ccc';
-        editMode(e.target);
-    };
+    ul.querySelectorAll('li').forEach(i => { i.classList.remove('edit-mode') });
+    e.classList.add('edit-mode');
+    inputButton.innerHTML = '<i class="fa-solid fa-pen fit"></i> تــعديل العنــصر ';
+    inputButton.style.backgroundColor = 'green';
+    inputText.value = e.innerText;
+    console.log(e);
 };
 
-function editMode(item)
-{
-    if (isEditedMode)
-    {
-        inputButton.addEventListener('click', edit);
-        inputButton.removeEventListener('click', addItem);
-        // appearItems.removeEventListener('click', displayItems);
-    }
-    
-    function edit()
-    {
-        
-        if (item.style.color === 'rgb(204, 204, 204)')
-        {
-        item.firstChild.textContent = inputText.value;
-        item.style.color = '#000';
-        inputText.value = '';
-        }
-    };
-
-    isEditedMode = false;
-};
-
-function reset()
-{   
-    if (!isEditedMode)
-    {
-        inputButton.innerHTML = '<i class="fa-solid fa-plus fit"></i>أضــافة العنـــصر الــى الســلة';     
-        inputButton.style.backgroundColor = '#333';
-        // inputButton.addEventListener('click', addItem);
-        // appearItems.addEventListener('click', displayItems);
-        
-    };                                                            
-};
-
-
-inputButton.addEventListener('mouseup', reset);
+// ـــــــــــــــــــــــــــــــــــــــــــــــ
 second.addEventListener('click', (e) => { e.preventDefault()});
 filter.addEventListener('input', filterItems);
 ul.addEventListener('click', onClickItem);
 inputButton.addEventListener('click', (e) => e.preventDefault());
-ul.addEventListener('click', editItem);
 inputButton.addEventListener('click', addItem);
 clearBtn.addEventListener('click', clearItems);
 appearItems.addEventListener('click', displayItems);
-deleteItems.addEventListener('click', (e) => { e.preventDefault(); if (confirm('هـــل تريد حذف العناصر السابقة؟!')) { localStorage.clear() } });
+deleteItems.addEventListener('click', (e) => { e.preventDefault(); if (confirm('هـــل تريد حذف العناصر السابقة؟!')) {localStorage.clear() }});
 hide();
 

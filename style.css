@@ -126,6 +126,11 @@ display: flex;
   margin: 0 5px 20px;
   font-weight: 700;
 }
+
+.edit-mode
+{
+color:#ccc;
+}
 ul
 {
 cursor:pointer;
