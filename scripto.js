@@ -11,7 +11,8 @@ const ico = document.querySelector('.fit');
 let isEditedMode = false;
 
 function addItem(e)
-{
+{   
+    let itemIndex;
     e.preventDefault();
     const newItem = inputText.value
     if (inputText.value === '' || inputText.value === ' ')
@@ -23,16 +24,36 @@ function addItem(e)
     if (isEditedMode)
     {
         const itemToEdit = ul.querySelector('.edit-mode');
-        removeItemFromStorage(itemToEdit.textContent);
+        if (duplicate(newItem))
+        {
+        alert('العنــصر موجود!');
+        inputText.value = '';
+        itemToEdit.classList.remove('edit-mode');
+        hide();
+        return;
+        }
+        removeItemFromStorage(itemToEdit);
         itemToEdit.remove();
         isEditedMode = false;
         hide();
         
+    } else
+    {
+        if (duplicate(newItem))
+        {
+            alert('العــنصر موجود مسبقاََ !');
+            inputText.value = '';
+            return;
+        };
     };
-    
     addItemToStorage();
     addToDOM(newItem);
 
+};
+function duplicate(item)
+{
+    const itemsFromStorage = getItemsFromStorage();
+    return itemsFromStorage.includes(item);
 };
 
 function onClickItem(e)
@@ -150,7 +171,7 @@ function displayItems()
 function setItemToEdit(e)
 { 
     isEditedMode = true;
-    ul.querySelectorAll('li').forEach(i => { i.classList.remove('edit-mode') });
+    ul.querySelectorAll('li').forEach(i =>  i.classList.remove('edit-mode'));
     e.classList.add('edit-mode');
     inputButton.innerHTML = '<i class="fa-solid fa-pen fit"></i> تــعديل العنــصر ';
     inputButton.style.backgroundColor = 'green';
@@ -161,7 +182,6 @@ function setItemToEdit(e)
 second.addEventListener('click', (e) => { e.preventDefault()});
 filter.addEventListener('input', filterItems);
 ul.addEventListener('click', onClickItem);
-inputButton.addEventListener('click', (e) => e.preventDefault());
 inputButton.addEventListener('click', addItem);
 clearBtn.addEventListener('click', clearItems);
 appearItems.addEventListener('click', displayItems);
