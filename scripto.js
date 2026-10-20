@@ -39,7 +39,7 @@ function addItem(e)
     } else
     {
         if (duplicate(newItem))
-        {
+        {   
             alert('العــنصر موجود مسبقاََ !');
             inputText.value = '';
             return;
@@ -52,7 +52,8 @@ function addItem(e)
 function duplicate(item)
 {
     const itemsFromStorage = getItemsFromStorage();
-    return itemsFromStorage === item;
+    const value=itemsFromStorage.some(i =>  i === item);
+    return value;
 };
 
 function onClickItem(e)
