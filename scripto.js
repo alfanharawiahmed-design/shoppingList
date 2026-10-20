@@ -12,9 +12,8 @@ let isEditedMode = false;
 
 function addItem(e)
 {   
-    let itemIndex;
     e.preventDefault();
-    const newItem = inputText.value
+    const newItem = inputText.value;
     if (inputText.value === '' || inputText.value === ' ')
     {
         alert('لايمــكن الاضافة الحقل فارغ !!');
@@ -53,7 +52,7 @@ function addItem(e)
 function duplicate(item)
 {
     const itemsFromStorage = getItemsFromStorage();
-    return itemsFromStorage.includes(item);
+    return itemsFromStorage === item;
 };
 
 function onClickItem(e)
